@@ -1,0 +1,80 @@
+{
+  "name": "Career Counseling by Ayan Pekhuya",
+  "short_name": "Career Guide",
+  "description": "After 10th and 12th — courses, further study, and govt/PSU exams. Mapped by a science educator.",
+  "start_url": "/CareerCounseling/",
+  "scope": "/CareerCounseling/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1B3A4B",
+  "theme_color": "#1B3A4B",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Explore Paths",
+      "short_name": "Explore",
+      "description": "Browse all career paths",
+      "url": "/CareerCounseling/#explore",
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Compare Paths",
+      "short_name": "Compare",
+      "description": "Compare two career paths side by side",
+      "url": "/CareerCounseling/#compare",
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}
