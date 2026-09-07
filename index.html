@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Career Counseling by Ayan Pekhuya</title>
+<style>
+:root {
+  --indigo:   #1B3A4B;
+  --copper:   #C9782A;
+  --teal:     #2A6F6A;
+  --bg:       #F5F2ED;
+  --card:     #FFFFFF;
+  --border:   #E0DBD4;
+  --border-lt:#EDEAE5;
+  --text-h:   #111110;
+  --text-b:   #38332E;
+  --text-m:   #82796F;
+  --text-lt:  #ACA49A;
+  --serif: Georgia,'Times New Roman',serif;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:var(--sans);-webkit-font-smoothing:antialiased;background:var(--bg);overflow:hidden;}
+
+#app{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--bg);}
+.safe-top{background:var(--indigo);padding-top:max(env(safe-area-inset-top),12px);flex-shrink:0;}
+.screen{display:none;flex-direction:column;flex:1;overflow:hidden;}
+.screen.active{display:flex;}
+.scroll-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
+
+/* ── BOTTOM NAV ── */
+.bnav{display:flex;background:var(--card);border-top:1px solid var(--border-lt);padding:8px 0;padding-bottom:max(env(safe-area-inset-bottom),8px);flex-shrink:0;}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;padding:4px 0;color:var(--text-lt);font-family:var(--sans);}
+.bnav-icon{font-size:20px;line-height:1;}
+.bnav-label{font-size:9px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+.bnav-btn.on{color:var(--indigo);}
+
+/* ── PAGE HEADER ── */
+.page-hdr{background:var(--indigo);padding:14px 20px 16px;flex-shrink:0;}
+.page-hdr-row{display:flex;align-items:center;gap:12px;}
+.hdr-back{width:34px;height:34px;background:rgba(255,255,255,0.1);border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.8);font-size:20px;flex-shrink:0;}
+.page-hdr-title{font-family:var(--serif);font-size:20px;font-weight:bold;color:#fff;letter-spacing:-0.2px;}
+.page-hdr-sub{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;}
+
+/* ── SECTION LABEL ── */
+.sec-lbl{font-size:10px;font-weight:700;color:var(--text-lt);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;}
+
+/* ══════════════════════════════════════
+   SPLASH
+══════════════════════════════════════ */
+#s-splash{background:var(--indigo);align-items:center;justify-content:center;text-align:center;padding:2rem 2.5rem 3rem;}
+.splash-icon{font-size:52px;margin-bottom:2rem;display:block;}
+.splash-title{font-family:var(--serif);font-size:32px;font-weight:bold;color:#fff;line-height:1.15;letter-spacing:-0.5px;margin-bottom:8px;}
+.splash-by{font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:2px;}
+.splash-role{font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:2.5rem;}
+.splash-rule{width:28px;height:2px;background:var(--copper);margin:0 auto 2.5rem;border-radius:1px;}
+.splash-tag{font-family:var(--serif);font-style:italic;font-size:16px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:270px;margin:0 auto 3rem;}
+.btn-main{display:block;width:100%;background:var(--copper);color:#fff;border:none;border-radius:10px;padding:16px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;}
+.btn-skip{background:none;border:none;color:rgba(255,255,255,0.3);font-size:13px;font-family:var(--sans);cursor:pointer;margin-top:16px;}
+
+/* ══════════════════════════════════════
+   ONBOARDING
+══════════════════════════════════════ */
+#s-onboard{background:var(--bg);}
+.ob-wrap{padding:24px 20px 16px;display:flex;flex-direction:column;height:100%;}
+.ob-prog{display:flex;gap:5px;margin-bottom:28px;}
+.ob-pip{height:3px;flex:1;border-radius:2px;background:var(--border);}
+.ob-pip.done{background:var(--copper);}
+.ob-pip.on{background:var(--indigo);}
+.ob-q{font-family:var(--serif);font-size:22px;font-weight:bold;color:var(--text-h);line-height:1.3;margin-bottom:6px;}
+.ob-hint{font-size:13px;color:var(--text-m);margin-bottom:20px;}
+.ob-list{display:flex;flex-direction:column;gap:9px;flex:1;}
+.ob-row{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;font-size:14px;color:var(--text-b);font-family:var(--sans);}
+.ob-row.sel{border-color:var(--copper);background:#FBF5EE;color:var(--indigo);font-weight:600;}
+.ob-icon{font-size:20px;flex-shrink:0;}
+.ob-check{margin-left:auto;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;flex-shrink:0;}
+.ob-row.sel .ob-check{background:var(--copper);border-color:var(--copper);color:#fff;}
+.ob-foot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;margin-top:auto;}
+.btn-back{background:none;border:none;color:var(--text-m);font-size:14px;font-family:var(--sans);cursor:pointer;padding:8px 0;}
+.btn-next{background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;}
+
+/* ══════════════════════════════════════
+   HOME
+══════════════════════════════════════ */
+#s-home{background:var(--bg);}
+.home-hdr{background:var(--indigo);padding:14px 20px 20px;flex-shrink:0;}
+.home-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+.home-brand{font-family:var(--serif);font-size:18px;font-weight:bold;color:#fff;letter-spacing:-0.2px;}
+.home-by{font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px;}
+.home-label{font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+.home-stage{font-family:var(--serif);font-size:20px;font-weight:bold;color:#fff;letter-spacing:-0.3px;line-height:1.25;margin-bottom:14px;}
+.pills{display:flex;gap:7px;flex-wrap:wrap;}
+.pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);}
+.pill.accent{background:var(--copper);border-color:var(--copper);color:#fff;font-weight:700;}
+
+.home-body{padding:20px;display:flex;flex-direction:column;gap:20px;}
+
+/* Step cards */
+.step-list{display:flex;flex-direction:column;gap:10px;}
+.step-card{background:var(--card);border:1px solid var(--border-lt);border-radius:12px;padding:15px 16px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;}
+.step-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.ico-i{background:#EBF0F4;}
+.ico-t{background:#E2EFEE;}
+.ico-c{background:#F8F0E6;}
+.step-body{flex:1;min-width:0;}
+.step-title{font-size:14px;font-weight:700;color:var(--text-h);line-height:1.35;margin-bottom:4px;}
+.step-desc{font-size:12px;color:var(--text-m);line-height:1.55;}
+.step-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;margin-top:8px;letter-spacing:0.04em;text-transform:uppercase;}
+.tag-s{background:#EBF0F4;color:var(--indigo);}
+.tag-g{background:#E2EFEE;color:var(--teal);}
+.tag-b{background:#F8F0E6;color:var(--copper);}
+.step-arr{font-size:18px;color:var(--border);flex-shrink:0;margin-top:11px;}
+
+/* Profile card */
+.profile-card{background:var(--card);border:1px solid var(--border-lt);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;}
+.profile-avatar{width:44px;height:44px;border-radius:50%;background:var(--indigo);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:#fff;font-weight:700;font-family:var(--serif);}
+.profile-name{font-size:14px;font-weight:700;color:var(--text-h);}
+.profile-stage{font-size:12px;color:var(--text-m);margin-top:2px;}
+.profile-edit{margin-left:auto;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;color:var(--text-b);cursor:pointer;font-family:var(--sans);}
+
+/* ══════════════════════════════════════
+   EXPLORE — FILTER BAR
+══════════════════════════════════════ */
+#s-explore{background:var(--bg);}
+.fbar{background:var(--card);border-bottom:1px solid var(--border-lt);padding:10px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.fbar::-webkit-scrollbar{display:none;}
+.fchip{flex-shrink:0;font-size:13px;font-weight:500;padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text-b);cursor:pointer;font-family:var(--sans);white-space:nowrap;}
+.fchip.on{background:var(--indigo);border-color:var(--indigo);color:#fff;}
+
+/* Search bar */
+.search-bar{padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border-lt);flex-shrink:0;}
+.search-input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--text-h);font-family:var(--sans);outline:none;}
+.search-input:focus{border-color:var(--indigo);}
+.search-input::placeholder{color:var(--text-lt);}
+
+.tlist{padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+
+/* ── LEVEL 1 NODE (main path) ── */
+.pnode{background:var(--card);border:1px solid var(--border-lt);border-radius:12px;overflow:hidden;}
+.pnode-hdr{padding:14px 14px 12px;display:flex;align-items:flex-start;gap:10px;cursor:pointer;}
+.pnode-main{flex:1;min-width:0;}
+.spill{font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:4px 9px;border-radius:5px;display:inline-block;margin-bottom:8px;}
+.sp-i{background:#EBF0F4;color:var(--indigo);}
+.sp-wb{background:#EEE8F5;color:#5C3A84;}
+.sp-df{background:#F0EDE6;color:#6B5533;}
+.pnode-title{font-size:15px;font-weight:700;color:var(--text-h);line-height:1.3;}
+.pnode-sub{font-size:12px;color:var(--text-m);margin-top:4px;line-height:1.45;}
+.pnode-tog{width:32px;height:32px;flex-shrink:0;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text-m);transition:transform 0.2s;margin-top:2px;border:none;cursor:pointer;}
+.pnode.open .pnode-tog{transform:rotate(180deg);background:#EBF0F4;color:var(--indigo);}
+.pnode-detail{display:none;border-top:1px solid var(--border-lt);}
+.pnode.open .pnode-detail{display:block;}
+
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 14px 0;}
+.meta-box{background:var(--bg);border-radius:8px;padding:10px 12px;}
+.meta-box.full{grid-column:1 / -1;}
+.meta-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-lt);margin-bottom:4px;}
+.meta-val{font-size:13px;font-weight:600;color:var(--text-h);line-height:1.4;}
+
+/* ── FORK SECTION ── */
+.fork-section{padding:14px;}
+.fork-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-lt);margin-bottom:10px;}
+.fork-row{display:flex;gap:8px;}
+.fork-btn{flex:1;border-radius:8px;padding:11px 8px;font-size:12px;font-weight:700;font-family:var(--sans);cursor:pointer;text-align:center;border:1.5px solid;background:none;}
+.fork-s{border-color:var(--indigo);color:var(--indigo);background:#EBF0F4;}
+.fork-j{border-color:var(--teal);color:var(--teal);background:#E2EFEE;}
+
+/* ── LEVEL 2: SUBJECT BRANCHES (inside a fork) ── */
+.subj-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.subj-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.subj-hdr{padding:11px 13px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.subj-emoji{font-size:18px;flex-shrink:0;}
+.subj-name{font-size:13px;font-weight:700;color:var(--text-h);flex:1;}
+.subj-tog{font-size:16px;color:var(--text-m);transition:transform 0.2s;}
+.subj-card.open .subj-tog{transform:rotate(180deg);}
+.subj-detail{display:none;padding:0 13px 13px;border-top:1px solid var(--border-lt);}
+.subj-card.open .subj-detail{display:block;}
+
+.exam-list{margin-top:10px;display:flex;flex-direction:column;gap:6px;}
+.exam-item{background:var(--card);border-radius:8px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;}
+.exam-num{font-size:11px;font-weight:700;color:var(--text-lt);width:18px;flex-shrink:0;padding-top:1px;}
+.exam-body{flex:1;}
+.exam-name{font-size:13px;font-weight:700;color:var(--text-h);margin-bottom:2px;}
+.exam-note{font-size:11px;color:var(--text-m);line-height:1.5;}
+.exam-tag{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;margin-top:5px;text-transform:uppercase;letter-spacing:0.04em;}
+.et-g{background:#E2EFEE;color:var(--teal);}
+.et-p{background:#EBF0F4;color:var(--indigo);}
+.et-r{background:#F0EDE6;color:#6B5533;}
+
+.vfy{margin:0 14px 14px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--text-m);line-height:1.55;display:flex;gap:7px;}
+.vfy-dot{color:var(--teal);flex-shrink:0;}
+
+.empty{text-align:center;padding:4rem 1.5rem;color:var(--text-lt);}
+.empty-icon{font-size:40px;display:block;margin-bottom:12px;}
+.empty p{font-size:14px;line-height:1.65;}
+
+/* ══════════════════════════════════════
+   COMPARE
+══════════════════════════════════════ */
+#s-compare{background:var(--bg);}
+.cmp-body{padding:16px;display:flex;flex-direction:column;gap:16px;}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cmp-col{background:var(--card);border:1px solid var(--border-lt);border-radius:12px;padding:14px;overflow:hidden;}
+.cmp-col.A{border-top:3px solid var(--indigo);}
+.cmp-col.B{border-top:3px solid var(--teal);}
+.cmp-name{font-size:13px;font-weight:700;color:var(--text-h);margin-bottom:12px;}
+.cmp-f{margin-bottom:10px;}
+.cmp-fl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-lt);margin-bottom:3px;}
+.cmp-fv{font-size:12px;color:var(--text-b);line-height:1.45;}
+.cmp-fv.win{color:var(--teal);font-weight:700;}
+.verdict{background:var(--indigo);border-radius:12px;padding:18px 20px;}
+.verdict-t{font-family:var(--serif);font-size:16px;font-weight:bold;color:#fff;margin-bottom:8px;}
+.verdict-b{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.7;}
+.disclaimer{font-size:11px;color:var(--text-lt);line-height:1.6;padding:12px 14px;background:var(--card);border:1px solid var(--border-lt);border-radius:10px;}
+
+/* ══════════════════════════════════════
+   MY PLAN
+══════════════════════════════════════ */
+#s-plan{background:var(--bg);}
+.plan-body{padding:16px;display:flex;flex-direction:column;gap:20px;}
+.backup-box{background:#FBF5EE;border:1px solid #EDD9BE;border-radius:12px;padding:16px;display:flex;gap:12px;}
+.backup-icon{font-size:22px;flex-shrink:0;}
+.backup-lbl{font-size:10px;font-weight:700;color:var(--copper);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;}
+.backup-txt{font-size:13px;color:var(--text-b);line-height:1.6;}
+.tl{display:flex;flex-direction:column;}
+.tl-row{display:flex;gap:14px;}
+.tl-spine{display:flex;flex-direction:column;align-items:center;width:14px;flex-shrink:0;}
+.tl-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.tl-dot.done{background:var(--teal);}
+.tl-dot.now{background:var(--copper);}
+.tl-dot.fut{background:transparent;border:2px solid var(--border);}
+.tl-line{width:1.5px;background:var(--border-lt);flex:1;margin:4px 0;min-height:20px;}
+.tl-cnt{flex:1;padding-bottom:22px;}
+.tl-per{font-size:10px;font-weight:700;color:var(--text-lt);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;}
+.tl-evt{font-size:14px;font-weight:700;color:var(--text-h);line-height:1.3;}
+.tl-det{font-size:12px;color:var(--text-m);margin-top:4px;line-height:1.6;}
+.saved-list{display:flex;flex-direction:column;gap:8px;}
+.saved-row{background:var(--card);border:1px solid var(--border-lt);border-radius:10px;padding:13px 15px;display:flex;align-items:center;gap:12px;}
+.s-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.s-dot.p{background:var(--indigo);}
+.s-dot.b{background:var(--copper);}
+.s-name{font-size:13px;font-weight:700;color:var(--text-h);margin-bottom:2px;}
+.s-meta{font-size:11px;color:var(--text-lt);}
+.s-bk{background:none;border:none;cursor:pointer;font-size:20px;margin-left:auto;}
+
+/* ── BOTTOM SHEET ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:none;align-items:flex-end;}
+.overlay.open{display:flex;}
+.sheet{background:var(--card);width:100%;border-radius:20px 20px 0 0;padding:20px;padding-bottom:max(env(safe-area-inset-bottom),20px);max-height:80vh;overflow-y:auto;}
+.sheet-pill{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px;}
+.sheet-lbl{font-size:10px;font-weight:700;color:var(--text-lt);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;}
+.sheet-title{font-family:var(--serif);font-size:19px;font-weight:bold;color:var(--text-h);margin-bottom:12px;}
+.sheet-body{font-size:13px;color:var(--text-b);line-height:1.8;}
+.sheet-close{width:100%;margin-top:20px;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="safe-top"></div>
+
+  <!-- ═══ SPLASH ═══ -->
+  <div id="s-splash" class="screen active">
+    <div class="scroll-body" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--indigo);padding:2rem 2.5rem 3rem;text-align:center;">
+      <span class="splash-icon">🌳</span>
+      <div class="splash-title">Career<br>Counseling</div>
+      <div class="splash-by">by Ayan Pekhuya</div>
+      <div class="splash-role">Science and Chemistry Educator</div>
+      <div class="splash-rule"></div>
+      <div class="splash-tag">"Know where you are.<br>Pick one road. Keep a backup."</div>
+      <button class="btn-main" onclick="go('onboard')">Get started — takes 1 minute</button>
+      <button class="btn-skip" onclick="go('home')">Skip, explore directly →</button>
+    </div>
+  </div>
+
+  <!-- ═══ ONBOARDING ═══ -->
+  <div id="s-onboard" class="screen">
+    <div class="ob-wrap">
+      <div class="ob-prog">
+        <div class="ob-pip" id="op0"></div>
+        <div class="ob-pip" id="op1"></div>
+        <div class="ob-pip" id="op2"></div>
+      </div>
+      <div id="ob-body" style="flex:1;display:flex;flex-direction:column;overflow-y:auto;"></div>
+      <div class="ob-foot">
+        <button class="btn-back" id="ob-back" onclick="obBack()">← Back</button>
+        <button class="btn-next" id="ob-next" onclick="obNext()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ HOME ═══ -->
+  <div id="s-home" class="screen">
+    <div class="home-hdr">
+      <div class="home-top">
+        <div>
+          <div class="home-brand">Career Counseling</div>
+          <div class="home-by">Ayan Pekhuya</div>
+        </div>
+      </div>
+      <div class="home-label">Your next steps after</div>
+      <div class="home-stage">Class 12 · PCM · West Bengal</div>
+      <div class="pills">
+        <span class="pill accent">Plan A — B.Tech via WBJEE</span>
+        <span class="pill">Backup — B.Sc + JAM</span>
+      </div>
+    </div>
+    <div class="scroll-body">
+      <div class="home-body">
+        <div>
+          <div class="sec-lbl">Your profile</div>
+          <div class="profile-card">
+            <div class="profile-avatar">A</div>
+            <div>
+              <div class="profile-name">Class 12 — PCM</div>
+              <div class="profile-stage">West Bengal · Higher studies interest</div>
+            </div>
+            <button class="profile-edit" onclick="go('onboard')">Edit</button>
+          </div>
+        </div>
+        <div>
+          <div class="sec-lbl">Your 3 next steps</div>
+          <div class="step-list">
+            <div class="step-card" onclick="tab('explore',null)">
+              <div class="step-ico ico-i">🎓</div>
+              <div class="step-body">
+                <div class="step-title">B.Tech via WBJEE / JEE Main</div>
+                <div class="step-desc">4-year degree. Opens GATE PSU, private SDE, M.Tech, MS abroad.</div>
+                <span class="step-tag tag-s">Further study</span>
+              </div>
+              <span class="step-arr">›</span>
+            </div>
+            <div class="step-card" onclick="tab('explore',null)">
+              <div class="step-ico ico-t">🏛</div>
+              <div class="step-body">
+                <div class="step-title">Diploma → SSC JE / State JE</div>
+                <div class="step-desc">3-yr Polytechnic if budget is tight. Lateral B.Tech later if needed.</div>
+                <span class="step-tag tag-g">Govt / PSU exam</span>
+              </div>
+              <span class="step-arr">›</span>
+            </div>
+            <div class="step-card" onclick="tab('plan',null)">
+              <div class="step-ico ico-c">🛡</div>
+              <div class="step-body">
+                <div class="step-title">Backup — B.Sc Physics → IIT JAM</div>
+                <div class="step-desc">Lower cost. Keeps M.Sc, NET, research, and teaching open.</div>
+                <span class="step-tag tag-b">Backup path</span>
+              </div>
+              <span class="step-arr">›</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding:16px;background:var(--card);border-radius:12px;border:1px solid var(--border-lt);">
+          <div style="font-size:11px;color:var(--text-lt);line-height:1.7;">
+            ⚠ This is a guidance map, not a guarantee. Verify every exam and course from the official notification / institution website before applying.<br><br>
+            <strong style="color:var(--text-m);">A product by Ayan Pekhuya · Science and Chemistry Educator</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bnav">
+      <button class="bnav-btn on" onclick="tab('home',this)"><span class="bnav-icon">⌂</span><span class="bnav-label">Home</span></button>
+      <button class="bnav-btn" onclick="tab('explore',this)"><span class="bnav-icon">⊞</span><span class="bnav-label">Explore</span></button>
+      <button class="bnav-btn" onclick="tab('compare',this)"><span class="bnav-icon">⇄</span><span class="bnav-label">Compare</span></button>
+      <button class="bnav-btn" onclick="tab('plan',this)"><span class="bnav-icon">🔖</span><span class="bnav-label">My plan</span></button>
+    </div>
+  </div>
+
+  <!-- ═══ EXPLORE ═══ -->
+  <div id="s-explore" class="screen">
+    <div class="page-hdr">
+      <div class="page-hdr-title">Explore paths</div>
+      <div class="page-hdr-sub">Tap to expand · Subjects inside each path</div>
+    </div>
+    <div class="search-bar">
+      <input class="search-input" type="text" placeholder="Search paths, subjects, exams…" oninput="doSearch(this.value)">
+    </div>
+    <div class="fbar">
+      <button class="fchip on" onclick="doFilter(this,'all')">All stages</button>
+      <button class="fchip" onclick="doFilter(this,'10')">After 10th</button>
+      <button class="fchip" onclick="doFilter(this,'12')">After 12th</button>
+      <button class="fchip" onclick="doFilter(this,'ug')">After UG</button>
+      <button class="fchip" onclick="doFilter(this,'govt')">Govt / PSU</button>
+      <button class="fchip" onclick="doFilter(this,'wb')">West Bengal</button>
+      <button class="fchip" onclick="doFilter(this,'def')">Defence</button>
+    </div>
+    <div class="scroll-body">
+      <div class="tlist" id="tlist"></div>
+    </div>
+    <div class="bnav">
+      <button class="bnav-btn" onclick="tab('home',this)"><span class="bnav-icon">⌂</span><span class="bnav-label">Home</span></button>
+      <button class="bnav-btn on" onclick="tab('explore',this)"><span class="bnav-icon">⊞</span><span class="bnav-label">Explore</span></button>
+      <button class="bnav-btn" onclick="tab('compare',this)"><span class="bnav-icon">⇄</span><span class="bnav-label">Compare</span></button>
+      <button class="bnav-btn" onclick="tab('plan',this)"><span class="bnav-icon">🔖</span><span class="bnav-label">My plan</span></button>
+    </div>
+  </div>
+
+  <!-- ═══ COMPARE ═══ -->
+  <div id="s-compare" class="screen">
+    <div class="page-hdr">
+      <div class="page-hdr-title">Compare paths</div>
+      <div class="page-hdr-sub">Honest ranges — no ranks, no guarantees</div>
+    </div>
+    <div class="scroll-body">
+      <div class="cmp-body">
+        <div class="cmp-grid" id="cmp-grid"></div>
+        <div class="verdict" id="cmp-verdict"></div>
+        <div class="disclaimer">⚠ Guidance map, not a guarantee. Verify every exam from the official notification.</div>
+      </div>
+    </div>
+    <div class="bnav">
+      <button class="bnav-btn" onclick="tab('home',this)"><span class="bnav-icon">⌂</span><span class="bnav-label">Home</span></button>
+      <button class="bnav-btn" onclick="tab('explore',this)"><span class="bnav-icon">⊞</span><span class="bnav-label">Explore</span></button>
+      <button class="bnav-btn on" onclick="tab('compare',this)"><span class="bnav-icon">⇄</span><span class="bnav-label">Compare</span></button>
+      <button class="bnav-btn" onclick="tab('plan',this)"><span class="bnav-icon">🔖</span><span class="bnav-label">My plan</span></button>
+    </div>
+  </div>
+
+  <!-- ═══ MY PLAN ═══ -->
+  <div id="s-plan" class="screen">
+    <div class="page-hdr">
+      <div class="page-hdr-title">My plan</div>
+      <div class="page-hdr-sub">Saved paths + rough 3-year timeline</div>
+    </div>
+    <div class="scroll-body">
+      <div class="plan-body">
+        <div class="backup-box">
+          <span class="backup-icon">🛡</span>
+          <div>
+            <div class="backup-lbl">Backup path saved</div>
+            <div class="backup-txt">B.Sc Physics → IIT JAM → M.Sc. Kept in sight if Plan A shifts. Lower cost, research and teaching both open.</div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-lbl">Rough 3-year timeline</div>
+          <div class="tl">
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot done"></div><div class="tl-line"></div></div>
+              <div class="tl-cnt"><div class="tl-per">Step 1</div><div class="tl-evt">Fill entrance forms</div><div class="tl-det">WBJEE / JEE Main. Verify at wbjeeb.nic.in and jeemain.nta.ac.in.</div></div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot now"></div><div class="tl-line"></div></div>
+              <div class="tl-cnt"><div class="tl-per">Step 2</div><div class="tl-evt">Sit entrance exams</div><div class="tl-det">Target NIT / MAKAUT state college. CSE or Civil preferred.</div></div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot fut"></div><div class="tl-line"></div></div>
+              <div class="tl-cnt"><div class="tl-per">Step 3</div><div class="tl-evt">B.Tech (4 years)</div><div class="tl-det">Internships in 3rd year. Start GATE prep in 3rd year — not final year.</div></div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-spine"><div class="tl-dot fut"></div></div>
+              <div class="tl-cnt"><div class="tl-per">Step 4</div><div class="tl-evt">GATE → PSU / M.Tech or private SDE</div><div class="tl-det">Two roads open. Depends on GATE score and what you want then.</div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-lbl">Saved paths</div>
+          <div class="saved-list">
+            <div class="saved-row"><div class="s-dot p"></div><div style="flex:1"><div class="s-name">B.Tech — CSE / Civil</div><div class="s-meta">After 12th PCM · Primary</div></div><button class="s-bk">🔖</button></div>
+            <div class="saved-row"><div class="s-dot b"></div><div style="flex:1"><div class="s-name">B.Sc Physics → IIT JAM → M.Sc</div><div class="s-meta">After 12th PCM · Backup</div></div><button class="s-bk">🔖</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bnav">
+      <button class="bnav-btn" onclick="tab('home',this)"><span class="bnav-icon">⌂</span><span class="bnav-label">Home</span></button>
+      <button class="bnav-btn" onclick="tab('explore',this)"><span class="bnav-icon">⊞</span><span class="bnav-label">Explore</span></button>
+      <button class="bnav-btn" onclick="tab('compare',this)"><span class="bnav-icon">⇄</span><span class="bnav-label">Compare</span></button>
+      <button class="bnav-btn on" onclick="tab('plan',this)"><span class="bnav-icon">🔖</span><span class="bnav-label">My plan</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM SHEET -->
+<div class="overlay" id="overlay" onclick="closeSheet(event)">
+  <div class="sheet" id="sheet">
+    <div class="sheet-pill"></div>
+    <div class="sheet-lbl" id="sh-lbl"></div>
+    <div class="sheet-title" id="sh-title"></div>
+    <div class="sheet-body" id="sh-body"></div>
+    <button class="sheet-close" onclick="closeSheet()">Close</button>
+  </div>
+</div>
+
+<script>
+// ── NAV ──
+const SCREENS=['splash','onboard','home','explore','compare','plan'];
+function go(id){SCREENS.forEach(s=>{const e=document.getElementById('s-'+s);if(e)e.classList.remove('active');});const t=document.getElementById('s-'+id);if(t)t.classList.add('active');}
+function tab(id,btn){go(id);if(btn){const nav=btn.closest('.bnav');if(nav)nav.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}}
+
+// ── ONBOARDING ──
+const OB=[
+  {q:'Which class have you just finished?',hint:'Pick your current stage',opts:[['🏫','Class 10 (just appeared / passed)'],['📗','Class 12 (just appeared / passed)'],['🔧','Diploma / Polytechnic'],['🎓',"Bachelor's degree"],['📘',"Master's degree"]]},
+  {q:'Which stream are you in?',hint:'Choose the closest match',opts:[['⚗️','Science — PCM (Maths)'],['🧬','Science — PCB (Biology)'],['🔬','Science — PCMB'],['📊','Commerce'],['📜','Arts / Humanities'],['💻','Engineering / B.Tech']]},
+  {q:'What is your main goal?',hint:'You can change this later',opts:[['🔭','Higher studies / research'],['🏛','Government job or exam'],['💼','Private job'],['🪖','Defence (Army / Navy / AF)'],['🏗','Business or skill-based']]},
+];
+let obStep=0,obSel=[null,null,null];
+function renderOb(){
+  const s=OB[obStep];
+  document.getElementById('ob-body').innerHTML=`<div class="ob-q">${s.q}</div><div class="ob-hint">${s.hint}</div><div class="ob-list" style="margin-top:16px">${s.opts.map(([e,l],i)=>`<button class="ob-row${obSel[obStep]===i?' sel':''}" onclick="pickOb(${i})"><span class="ob-icon">${e}</span><span>${l}</span><span class="ob-check">${obSel[obStep]===i?'✓':''}</span></button>`).join('')}</div>`;
+  for(let i=0;i<3;i++){const d=document.getElementById('op'+i);if(d)d.className='ob-pip'+(i<obStep?' done':i===obStep?' on':'');}
+  const back=document.getElementById('ob-back');if(back){back.style.opacity=obStep===0?'0':'1';back.style.pointerEvents=obStep===0?'none':'auto';}
+  const nxt=document.getElementById('ob-next');if(nxt)nxt.textContent=obStep===2?'See my paths →':'Next →';
+}
+function pickOb(i){obSel[obStep]=i;renderOb();}
+function obNext(){if(obStep<2){obStep++;renderOb();}else go('home');}
+function obBack(){if(obStep>0){obStep--;renderOb();}}
+
+// ══════════════════════════════════════════════════════════════
+// SUBJECT-SPECIFIC EXAM DATA
+// ══════════════════════════════════════════════════════════════
+const SUBJECTS = {
+
+  // ── B.Sc CHEMISTRY ──
+  'bsc-chem': {
+    name:'B.Sc Chemistry', emoji:'⚗️',
+    study:[
+      {name:'M.Sc Chemistry (IIT JAM / CUET-PG)',note:'IIT/NIT/Central Univ M.Sc → CSIR NET/GATE for PhD or PSU',tag:'et-p'},
+      {name:'M.Sc Industrial Chemistry / Polymer',note:'Specialisation for pharma/materials industry',tag:'et-p'},
+      {name:'CSIR NET Chemical Sciences',note:'JRF + Lectureship. Gateway to PhD with fellowship',tag:'et-p'},
+      {name:'GATE — Chemistry (CY) / XL',note:'M.Tech/MS + PSU/DRDO/BARC recruitment via GATE score',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'UPSC Geologist / Geo-Scientist',note:'Geological Survey of India (GSI). Requires relevant PG. Group A.',tag:'et-g'},
+      {name:'DRDO CEPTAM (Technician / STA-B)',note:'Ministry of Defence labs. Chemistry & material science roles.',tag:'et-g'},
+      {name:'BARC Scientific Officer (OCES/DGFS)',note:'Bhabha Atomic Research Centre. Nuclear chemistry, spectroscopy.',tag:'et-g'},
+      {name:'NTPC Executive Trainee (Chemistry)',note:'National Thermal Power Corp. Water/fuel/env chemistry lab role.',tag:'et-g'},
+      {name:'Ordnance / Gun Factory Board',note:'OFB/OFLB civilian posts — Lab Assistant, Chemist grade.',tag:'et-g'},
+      {name:'SSC — Junior Chemical Analyst (JCA)',note:'Central Excise / Customs / Narcotics labs under SSC.',tag:'et-g'},
+      {name:'Food Safety Officer (FSSAI)',note:'State/central food testing labs. After B.Sc/M.Sc in Chemistry.',tag:'et-g'},
+      {name:'Drug Inspector (State PCS / FDC)',note:'State food & drug control. B.Pharm also eligible.',tag:'et-g'},
+      {name:'ISRO Technician / Scientist (Tech)',note:'Chemistry support in propellant/fuel divisions. Rare openings.',tag:'et-g'},
+      {name:'Indian Navy — Short Service (Chemical)',note:'Specially trained officer cadre for materials/fuel testing.',tag:'et-r'},
+      {name:'State Pollution Control Board',note:'Environmental chemist / lab analyst. State-level notification.',tag:'et-g'},
+      {name:'Teaching — School (TET/CTET) + B.Ed',note:'Chemistry teacher Class 6–12. TET + B.Ed required.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Sc PHYSICS ──
+  'bsc-phys': {
+    name:'B.Sc Physics', emoji:'🔭',
+    study:[
+      {name:'M.Sc Physics (IIT JAM)',note:'IIT/NIT M.Sc → CSIR NET / JEST for PhD',tag:'et-p'},
+      {name:'JEST — Physics (TIFR/IIA/IISc)',note:'PhD/Integrated PhD at premier research institutes',tag:'et-p'},
+      {name:'CSIR NET Physical Sciences',note:'JRF + Lectureship. Required for faculty + PhD stipend',tag:'et-p'},
+      {name:'GATE — Physics (PH)',note:'M.Tech/MS + DRDO/BARC recruitment score',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'BARC OCES/DGFS — Physics',note:'Reactor physics, radiation safety, instrumentation.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B / Technician',note:'Defence labs: optics, radar, electronics, materials.',tag:'et-g'},
+      {name:'ISRO Scientist/Engineer (Tech support)',note:'Space science, optics, thermal roles. Degree-level openings.',tag:'et-g'},
+      {name:'IMD — Scientific Assistant',note:'India Meteorological Dept. Physics/Maths background preferred.',tag:'et-g'},
+      {name:'NTPC Executive Trainee (Physics/Instrumentation)',note:'Power plant instrumentation and calibration roles.',tag:'et-g'},
+      {name:'UPSC Geologist',note:'GSI Group A. M.Sc + UPSC exam.',tag:'et-g'},
+      {name:'SSC CGL — Statistical Investigator / Inspector',note:'Open to all graduates. Physics background useful.',tag:'et-g'},
+      {name:'Army Technical Entry (10+2 TES)',note:'After 12th PCM — if not yet UG. Short Service Commission.',tag:'et-r'},
+      {name:'Teaching — School + College (NET)',note:'B.Ed for school; UGC NET + PhD for college.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Sc MATHEMATICS ──
+  'bsc-maths': {
+    name:'B.Sc Mathematics', emoji:'📐',
+    study:[
+      {name:'M.Sc Mathematics (IIT JAM / CUET-PG)',note:'IIT/NIT/Central Univ M.Sc → NET/GATE/actuarial',tag:'et-p'},
+      {name:'MCA — NIMCET / State CET',note:'Master of Computer Applications. Coding career after Maths.',tag:'et-p'},
+      {name:'Actuarial Science — IAI/IFoA',note:'CT/CA paper series. Highest-paying Maths career track.',tag:'et-p'},
+      {name:'Integrated PhD (TIFR/CMI/ISI)',note:'Direct research in pure/applied mathematics.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'RBI Grade B (DEPR) — Economist',note:'Research wing. PG in Economics/Stats/Maths preferred.',tag:'et-g'},
+      {name:'SSC CGL — Statistical Investigator Grade II',note:'Ministry of Statistics. B.Sc Maths with Stats required.',tag:'et-g'},
+      {name:'UPSC ISS — Indian Statistical Service',note:'PG Stat/Maths required. Group A central service.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B (Maths/Stats)',note:'Mathematical modelling support in defence labs.',tag:'et-g'},
+      {name:'LIC / GIC / NIA — Actuarial Assistant',note:'Insurance actuarial role after IAI papers cleared.',tag:'et-g'},
+      {name:'NABARD / IBPS — Data Analyst (SO)',note:'Specialist Officer — quantitative/analytics background.',tag:'et-g'},
+      {name:'Teaching — TET/CTET + B.Ed',note:'Maths teacher shortage across India. High demand.',tag:'et-p'},
+      {name:'Private — Data Science / Quant Finance',note:'After MCA or upskilling (Python/ML). High salary.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Sc BIOLOGY / ZOOLOGY / BOTANY ──
+  'bsc-bio': {
+    name:'B.Sc Biology (Zoology / Botany / Life Sciences)', emoji:'🧬',
+    study:[
+      {name:'M.Sc Life Sciences / Zoology / Botany (IIT JAM BL)',note:'IIT/Central Univ M.Sc → CSIR NET Life Sciences',tag:'et-p'},
+      {name:'CSIR NET Life Sciences (LS)',note:'JRF + Lectureship. Gateway to PhD in biology/biotech.',tag:'et-p'},
+      {name:'DBT JRF — Biotechnology',note:'Dept of Biotechnology fellowship. Excellent stipend for PhD.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'Forest Service / IFS (UPSC)',note:'Indian Forest Service. After PG in Botany/Zoology/Forestry.',tag:'et-g'},
+      {name:'Botanical Survey of India (BSI)',note:'Scientific Assistant / Scientist posts. MoEFCC under.',tag:'et-g'},
+      {name:'Zoological Survey of India (ZSI)',note:'Fauna survey, taxonomy, wildlife posts.',tag:'et-g'},
+      {name:'ICAR — Junior Research Fellow',note:'Agricultural research. Life Science / Agriculture graduates.',tag:'et-g'},
+      {name:'DRDO CEPTAM — Life Sciences STA-B',note:'Defence labs: food tech, biochemistry, biomaterials.',tag:'et-g'},
+      {name:'FSSAI — Technical Officer',note:'Food safety analysis. Biology/Microbiology/Biotech.',tag:'et-g'},
+      {name:'State Forest Dept — Range Officer',note:'State-level exam. Botany/Zoology background preferred.',tag:'et-g'},
+      {name:'CSIR IICT / CDRI / CIMAP Scientist',note:'Chemical/pharmaceutical/botanical research labs.',tag:'et-g'},
+      {name:'Teaching — B.Ed + TET/CTET',note:'Biology teacher. High demand at secondary/senior level.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Sc COMPUTER SCIENCE / BCA ──
+  'bsc-cs': {
+    name:'B.Sc Computer Science / BCA', emoji:'💻',
+    study:[
+      {name:'MCA — NIMCET / State CET',note:'3-yr MCA upgrades to engineering-equivalent for many roles.',tag:'et-p'},
+      {name:'M.Sc CS / IT (CUET-PG)',note:'Specialise in AI/ML, Cyber Security, Data Science.',tag:'et-p'},
+      {name:'GATE — CS & IT (CS)',note:'M.Tech/MS at IIT + NIC/DRDO/ISRO tech roles via GATE score.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'NIC — Scientist-B (IT)',note:'National Informatics Centre. Central govt IT backbone.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B (CS/IT)',note:'Defence software and systems labs.',tag:'et-g'},
+      {name:'SSC CGL — Assistant Section Officer (IT)',note:'Various ministries. CS graduates preferred.',tag:'et-g'},
+      {name:'IBPS SO — IT Officer Scale I',note:'Banking IT specialist. B.Sc CS/BCA/MCA eligible.',tag:'et-g'},
+      {name:'RRB — Junior Engineer (IT)',note:'Railway IT posts. GATE score + degree.',tag:'et-g'},
+      {name:'ISRO — Technician / Scientist (Tech)',note:'IT and systems support roles at ISRO centres.',tag:'et-g'},
+      {name:'Private — SDE / Backend / Full-Stack',note:'After upskilling. React, Node, Python, cloud. High demand.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Sc GEOLOGY ──
+  'bsc-geo': {
+    name:'B.Sc Geology', emoji:'🪨',
+    study:[
+      {name:'M.Sc Geology / Applied Geology',note:'IIT/Central Univ JAM GL → GSI/ONGC/mining roles',tag:'et-p'},
+      {name:'M.Tech Petroleum Geoscience / Mining',note:'Specialisation for oil & gas sector.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'UPSC Geo-Scientist (Geologist)',note:'Geological Survey of India Group A. Most prestigious.',tag:'et-g'},
+      {name:'ONGC — Geologist / Geophysicist',note:'E&P sector. GATE Geology/Geophysics paper.',tag:'et-g'},
+      {name:'Coal India Limited (CIL) — Mining Geologist',note:'GATE score + CIL exam. Underground survey roles.',tag:'et-g'},
+      {name:'GSI — Field Geologist',note:'Geological Survey of India direct recruitment.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B (Earth Sciences)',note:'Geological/geophysical support in defence projects.',tag:'et-g'},
+      {name:'NMDC / SAIL / NALCO — Geologist',note:'PSU mining companies. GATE or direct recruitment.',tag:'et-g'},
+      {name:'State Mining Dept — Assistant Geologist',note:'State PSC exam. Mine inspection and survey.',tag:'et-g'},
+    ]
+  },
+
+  // ── B.Sc STATISTICS ──
+  'bsc-stat': {
+    name:'B.Sc Statistics', emoji:'📊',
+    study:[
+      {name:'M.Sc Statistics (IIT JAM ST / ISI)',note:'Actuarial, data science, govt statistical service',tag:'et-p'},
+      {name:'Actuarial Science — IAI / IFoA',note:'Most lucrative Maths/Stats career path in India.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'UPSC ISS — Indian Statistical Service',note:'Govt of India ministries. PG Stat required. Group A.',tag:'et-g'},
+      {name:'SSC CGL — Statistical Investigator Grade II',note:'MoSPI and ministries. B.Sc Stats with 60% marks.',tag:'et-g'},
+      {name:'RBI Grade B — DSIM Dept',note:'Data Science & Information Management wing.',tag:'et-g'},
+      {name:'NABARD — Development Assistant / Manager',note:'Rural credit data. Stats background valued.',tag:'et-g'},
+      {name:'CSO / NSSO — Field Statistician',note:'Central Statistical Office data collection posts.',tag:'et-g'},
+      {name:'LIC / GIC — Actuarial Trainee',note:'After clearing IAI papers. Very high salary ceiling.',tag:'et-g'},
+      {name:'Private — Data Analyst / Data Scientist',note:'After Python/R upskilling. High demand across sectors.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Tech MECHANICAL ──
+  'btech-me': {
+    name:'B.Tech Mechanical Engineering', emoji:'⚙️',
+    study:[
+      {name:'M.Tech Thermal / Mfg / Design (GATE ME)',note:'IIT/NIT M.Tech with ₹12,400/month stipend',tag:'et-p'},
+      {name:'MBA Operations / Supply Chain',note:'CAT/XAT. Production management, consulting track.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'GATE ME → PSU ET (ONGC/IOCL/NTPC/BHEL/CIL)',note:'Executive Trainee. ₹60–80K starting CTC. Most seats in ME.',tag:'et-g'},
+      {name:'UPSC ESE / IES — Mechanical',note:'IRSME, IRSE (Mechanical), Defence services. Group A.',tag:'et-g'},
+      {name:'SSC JE — Mechanical',note:'CPWD, BRO, MES. ₹35–40K starting. 10+2 / Diploma also ok.',tag:'et-g'},
+      {name:'RRB JE/SSE — Mechanical',note:'Railway mechanical deptt, workshop, rolling stock.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B / Scientist B',note:'Defence R&D. Mechanical design, materials, propulsion.',tag:'et-g'},
+      {name:'ISRO Scientist/Engineer SC — Mechanical',note:'Launch vehicle structures, mechanisms, propulsion.',tag:'et-g'},
+      {name:'Indian Navy — SSC Technical (Mechanical)',note:'Short Service Commission in Engine/Mechanical branch.',tag:'et-r'},
+      {name:'BARC OCES — Mechanical',note:'Reactor mechanical systems. 1-yr training then Sci-C.',tag:'et-g'},
+      {name:'Private — Core Mfg / Auto / Consulting',note:'Design Engineer, Production, QA at Tata/L&T/Mahindra/Bosch.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Tech CIVIL ──
+  'btech-ce': {
+    name:'B.Tech Civil Engineering', emoji:'🏗',
+    study:[
+      {name:'M.Tech Structural / Geotechnical / Transportation (GATE CE)',note:'IIT/NIT M.Tech. Strong for UPSC ESE + research.',tag:'et-p'},
+      {name:'M.Plan Urban Planning',note:'SPA Delhi/Mumbai. Urban development career.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'UPSC ESE / IES — Civil',note:'CES, CWES (Water), CPWD, Defence Works. Group A.',tag:'et-g'},
+      {name:'SSC JE — Civil',note:'CPWD, BRO, CWC, MES. Largest volume of SSC JE seats.',tag:'et-g'},
+      {name:'GATE CE → PSU (RITES/NBCC/NHPC/WAPCOS)',note:'Infrastructure PSUs. GATE CE score accepted.',tag:'et-g'},
+      {name:'RRB JE — Civil',note:'Railway infrastructure: track, bridge, station construction.',tag:'et-g'},
+      {name:'State PSC AE / JE — Civil (PWD/Irrigation)',note:'UPPSC, WBPSC, MPPSC, BPSC AE. Largest state cadre.',tag:'et-g'},
+      {name:'WBPSC AE / State JE (WB PWD / Irrigation)',note:'West Bengal specific. pscwbapplication.in',tag:'et-g'},
+      {name:'DDA / MMRDA / BDA — Junior Engineer',note:'Development authorities. Civil JE posts as notified.',tag:'et-g'},
+      {name:'NHAI / NHIDCL — Project Engineer',note:'National highway construction and supervision.',tag:'et-g'},
+      {name:'Private — Construction / PMC / Real Estate',note:'Site engineer, project manager, quality control.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Tech EE / EEE ──
+  'btech-ee': {
+    name:'B.Tech Electrical Engineering (EE / EEE)', emoji:'⚡',
+    study:[
+      {name:'M.Tech Power Systems / Control / Power Electronics (GATE EE)',note:'IIT/NIT M.Tech + UPSC ESE eligibility',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'GATE EE → PSU (PGCIL/NTPC/NHPC/NPCIL/BHEL)',note:'Power Grid, NTPC. Largest no. of EE PSU seats in India.',tag:'et-g'},
+      {name:'UPSC ESE / IES — Electrical',note:'Central Power Engineering Service, Defence. Group A.',tag:'et-g'},
+      {name:'SSC JE — Electrical',note:'CPWD, MES, BRO electrical maintenance posts.',tag:'et-g'},
+      {name:'State Electricity Board JE / AE',note:'WBSEDCL, UPPCL, MSEDCL, TSTRANSCO. Large annual vacancy.',tag:'et-g'},
+      {name:'RRB JE — Electrical (TRD/Signal)',note:'Railway traction, signalling, general service.',tag:'et-g'},
+      {name:'ISRO Scientist/Engineer SC — EE',note:'Power systems, ground station, spacecraft power.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B (EE)',note:'Radar, power electronics, defence systems labs.',tag:'et-g'},
+      {name:'Private — Power Sector / HVAC / Automation',note:'ABB, Siemens, L&T ECC, Schneider, Havells.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Tech ECE ──
+  'btech-ece': {
+    name:'B.Tech Electronics & Communication (ECE)', emoji:'📡',
+    study:[
+      {name:'M.Tech VLSI / Signal Processing / Embedded (GATE EC)',note:'IIT/NIT M.Tech. VLSI design is highest-paid track.',tag:'et-p'},
+      {name:'MS Research — IIT/IISc (GATE EC)',note:'Research assistant + stipend. Leads to PhD or industry R&D.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'GATE EC → PSU (BSNL/BEL/HAL/ECIL/DRDO)',note:'BEL, HAL, ECIL, BSNL. Defence electronics PSUs.',tag:'et-g'},
+      {name:'UPSC ESE — E&T (Electronics & Telecom)',note:'IRSSE, IRAS (Signalling), Defence. Group A.',tag:'et-g'},
+      {name:'ISRO Scientist/Engineer — ECE/Electronics',note:'Satellite communication, onboard electronics.',tag:'et-g'},
+      {name:'DRDO CEPTAM / Scientist B — ECE',note:'Radar, EW, signal processing, antenna design.',tag:'et-g'},
+      {name:'RRB JE — Signal & Telecom (S&T)',note:'Railway signalling infrastructure.',tag:'et-g'},
+      {name:'BEL / HAL — Engineer Trainee',note:'Direct recruitment without GATE. Check notification.',tag:'et-g'},
+      {name:'Private — VLSI / Embedded / RF Engineering',note:'Qualcomm, Intel, Samsung, Mediatek, TI India.',tag:'et-p'},
+      {name:'Private — SDE (Software after ECE)',note:'Many ECE graduates enter software. Python/DSA needed.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Tech CSE / IT ──
+  'btech-cse': {
+    name:'B.Tech Computer Science (CSE / IT)', emoji:'🖥',
+    study:[
+      {name:'M.Tech CS (GATE CS) at IIT/NIT',note:'Research + stipend. Leads to product company or faculty.',tag:'et-p'},
+      {name:'MS abroad — GRE + TOEFL/IELTS',note:'USA/Canada/Germany/Singapore. 2-yr MS + OPT visa.',tag:'et-p'},
+      {name:'MBA — CAT/XAT/GMAT',note:'Product management, consulting, VC/startup track.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'NIC Scientist-B',note:'National Informatics Centre. Central govt digital infra.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B / Scientist B (CS)',note:'Software systems in defence. Cyber, AI, C4I.',tag:'et-g'},
+      {name:'ISRO Scientist/Engineer SC — CS',note:'Ground software, telemetry, mission control systems.',tag:'et-g'},
+      {name:'RBI IT Dept / SEBI IT Officer',note:'BFSI sector IT roles — data security, systems.',tag:'et-g'},
+      {name:'SSC CGL — Assistant (Ministries)',note:'Open to all graduates. Good option alongside coding prep.',tag:'et-g'},
+      {name:'Private — SDE I (Product companies)',note:'Google, Microsoft, Amazon, Flipkart, Zomato. DSA + system design.',tag:'et-p'},
+      {name:'Private — SDE (Service companies)',note:'TCS, Infosys, Wipro, Cognizant. Mass hiring.',tag:'et-p'},
+      {name:'Startup — Full-stack / ML Engineer',note:'High risk, high learning. Equity + salary.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Sc NURSING ──
+  'bsc-nursing': {
+    name:'B.Sc Nursing', emoji:'🏥',
+    study:[
+      {name:'M.Sc Nursing — Medical-Surgical / Community',note:'PG nursing at AIIMS/PGIMER/state colleges',tag:'et-p'},
+      {name:'MPH — Master of Public Health',note:'TISS/IIPH. Health management + policy track.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'NORCET — AIIMS Nursing Officer',note:'National level exam. Pay Level 7 (₹44,900+). Prestigious.',tag:'et-g'},
+      {name:'ESIC / Railways / CAPF Nursing Officer',note:'Various central notifications. Staff Nurse posts.',tag:'et-g'},
+      {name:'State Nursing Service — Staff Nurse',note:'State PSC / NHM recruitment. Largest volume of vacancies.',tag:'et-g'},
+      {name:'Armed Forces Medical Services — MNS',note:'Military Nursing Service. Short service commission.',tag:'et-r'},
+      {name:'Private Hospital — Staff / Senior Nurse',note:'Apollo, Fortis, Medanta, Max. Higher salaries in metro.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Pharm ──
+  'bpharm': {
+    name:'B.Pharm (Pharmacy)', emoji:'💊',
+    study:[
+      {name:'M.Pharm — GPAT (Pharmacology / Pharma Chemistry)',note:'IIT/NIT/college M.Pharm. Required for Drug Inspector path.',tag:'et-p'},
+      {name:'Pharm.D — Doctor of Pharmacy',note:'6-yr clinical pharmacist degree. Hospital pharmacy focus.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'Drug Inspector — State FDA / CDSCO',note:'State FDA exam. B.Pharm + 1-2 yr experience. Regulatory role.',tag:'et-g'},
+      {name:'ESIC / Railways — Pharmacist',note:'Central govt pharmacist. Staff Selection (SSC) or direct.',tag:'et-g'},
+      {name:'SSC — Scientific Assistant (Pharmacist grade)',note:'UPSC / SSC notified pharmacist posts in govt institutions.',tag:'et-g'},
+      {name:'DRDO CEPTAM — STA-B (Pharma)',note:'Defence labs: drug formulation, chemical stores.',tag:'et-g'},
+      {name:'FSSAI — Technical Officer',note:'Food & drug testing labs. B.Pharm eligible.',tag:'et-g'},
+      {name:'Private Pharma — Medical Rep / QC / RA',note:'Sun Pharma, Cipla, Dr Reddy. QC, RA, formulation roles.',tag:'et-p'},
+      {name:'Hospital Pharmacist',note:'Retail or clinical. Required for Pharm.D route.',tag:'et-p'},
+    ]
+  },
+
+  // ── MBBS ──
+  'mbbs': {
+    name:'MBBS', emoji:'🩺',
+    study:[
+      {name:'NEET-PG → MD / MS (Clinical specialisation)',note:'The main PG route. 3-yr residency.',tag:'et-p'},
+      {name:'INI-CET → AIIMS / PGIMER / JIPMER MD-MS',note:'Separate exam for premier institutes.',tag:'et-p'},
+      {name:'DNB — National Board of Examinations',note:'Hospital-based. Equivalent to MD/MS.',tag:'et-p'},
+      {name:'USMLE (Steps 1/2/3) — USA',note:'Most followed international route. Residency match.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'UPSC CMS — Central Health Services',note:'Group A doctor posts at central govt hospitals.',tag:'et-g'},
+      {name:'State PSC — Medical Officer (MO)',note:'PHC/CHC/district hospital. Large volume annually.',tag:'et-g'},
+      {name:'AIIMS / ESIC / Railways MO',note:'Direct central recruitment. Better salary vs state.',tag:'et-g'},
+      {name:'Armed Forces Medical Services (AFMS)',note:'Short Service Commission. Army/Navy/IAF hospitals.',tag:'et-r'},
+      {name:'Private Hospital — Resident Doctor',note:'After internship. Parallel to PG exam preparation.',tag:'et-p'},
+    ]
+  },
+
+  // ── B.Com / CA ──
+  'bcom-ca': {
+    name:'B.Com / CA / CS / BBA', emoji:'📈',
+    study:[
+      {name:'CA Final — ICAI',note:'Highest Indian accounting qualification. 4-5 yr articleship.',tag:'et-p'},
+      {name:'MBA — CAT/XAT/SNAP/NMAT',note:'IIM, XLRI, SPJIMR. Finance, consulting, strategy.',tag:'et-p'},
+      {name:'CFA Level 1/2/3 — CFA Institute USA',note:'Global investment analysis credential.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'IBPS PO / SBI PO — Bank Probationary Officer',note:'Largest govt banking exam. All graduates eligible.',tag:'et-g'},
+      {name:'RBI Grade B — General / DEPR / DSIM',note:'Most prestigious banking exam. Very competitive.',tag:'et-g'},
+      {name:'NABARD Grade A — Finance / Agri',note:'Rural finance development bank. Good work-life balance.',tag:'et-g'},
+      {name:'SEBI Grade A — General / Legal / IT',note:'Capital markets regulator. Limited seats.',tag:'et-g'},
+      {name:'SSC CGL — Auditor / AAO / Inspector (Tax)',note:'Income Tax, Excise, Audit. B.Com preferred.',tag:'et-g'},
+      {name:'EPFO — Enforcement Officer / AAO',note:'Provident fund administration. Commerce background strong.',tag:'et-g'},
+      {name:'LIC / GIC — Assistant Administrative Officer',note:'Insurance sector. AAO recruitment annually.',tag:'et-g'},
+      {name:'IRDAI — Assistant Manager',note:'Insurance regulator. Finance background valued.',tag:'et-g'},
+      {name:'Private — Big 4 Audit / Fintech / Banking',note:'After CA or MBA. Deloitte, EY, KPMG, PwC, HDFC, Axis.',tag:'et-p'},
+    ]
+  },
+
+  // ── BA / Arts ──
+  'ba-arts': {
+    name:'BA / BA LLB / BJMC / B.Des', emoji:'📜',
+    study:[
+      {name:'MA (various) — CUET-PG / JNU / DU',note:'History, Political Science, Economics, Psychology.',tag:'et-p'},
+      {name:'LLM — After BA LLB / LLB',note:'Specialisation in corporate, criminal, IP, international law.',tag:'et-p'},
+      {name:'B.Ed — After BA',note:'Required for school teaching. 2-yr programme.',tag:'et-p'},
+    ],
+    jobs:[
+      {name:'UPSC CSE — IAS / IPS / IFS',note:'Most followed path from Arts. Any graduate eligible.',tag:'et-g'},
+      {name:'State PSC — SDO / SDPO / BDO',note:'State civil services. Same prep as UPSC CSE mostly.',tag:'et-g'},
+      {name:'SSC CGL — Sub-Inspector / Inspector / ASO',note:'Income Tax, CBI, NIA, Central Excise. Open to all UG.',tag:'et-g'},
+      {name:'SSC CHSL — DEO / PA / SA',note:'12th-pass level. Good while preparing for higher exams.',tag:'et-g'},
+      {name:'Judiciary — Civil Judge (State PCS-J)',note:'After LLB. State Judicial Service Exam.',tag:'et-g'},
+      {name:'High Court / Supreme Court — Law Clerk',note:'Post-LLB. Very competitive. Prestigious.',tag:'et-r'},
+      {name:'Media — Journalist / Content (BJMC)',note:'Print, digital, broadcast after BJMC/MA JMC.',tag:'et-p'},
+      {name:'Design — UX / Motion / Brand (B.Des)',note:'NID/NIFT graduates. Product companies, agencies.',tag:'et-p'},
+      {name:'CTET / TET — School Teacher',note:'After B.Ed. High demand especially in govt schools.',tag:'et-p'},
+    ]
+  },
+};
+
+// ══════════════════════════════════════════════════════════════
+// MAIN TREE DATA
+// ══════════════════════════════════════════════════════════════
+const TREE = [
+  // ── AFTER 10th ──
+  { stage:'After 10th', sc:'sp-i', title:'Polytechnic Diploma', sub:'3 years · Civil · Mech · EE · ECE · CSE · Chemical + more',
+    dur:'3 years', cost:'₹30K – 2L', exam:'DET / JEEP / POLYCET',
+    study:'Lateral B.Tech 2nd year via LEET/JELET · B.Voc · AMIE',
+    jobs:'SSC JE · State JE (PWD, PHED, Irrigation) · RRB JE · WBSEDCL · PSU Diploma Trainee (BHEL, SAIL, NTPC)',
+    vfy:'polycet.nic.in / state polytechnic board', tags:['10','govt'], subjKey:null },
+
+  { stage:'After 10th', sc:'sp-i', title:'ITI — NCVT / SCVT', sub:'6 months – 2 years · Electrician · Fitter · Welder · COPA · RAC + 130 trades',
+    dur:'6 months – 2 yr', cost:'₹5K – 50K', exam:'State ITI entrance / merit',
+    study:'NAPS apprenticeship · Diploma lateral (some states)',
+    jobs:'Railway apprentice · ALP · Defence civilian · Ordnance · PSU trade apprentice · Private mfg · Self-employment',
+    vfy:'dgt.gov.in', tags:['10','govt'], subjKey:null },
+
+  // ── AFTER 12th PCM → ENGINEERING ──
+  { stage:'After 12th — PCM', sc:'sp-i', title:'B.Tech / B.E. (4 years)', sub:'CSE · AI/ML · Civil · Mech · EE · ECE · Chemical + many more',
+    dur:'4 years', cost:'₹3L – 15L', exam:'JEE Main · JEE Advanced · WBJEE · BITSAT · MHT CET · KCET',
+    study:'M.Tech via GATE · MBA (CAT/XAT) · MS abroad (GRE) · M.Des CEED · Integrated PhD',
+    jobs:'GATE → PSU ET (ONGC, IOCL, NTPC, BHEL, PGCIL, SAIL + 50 more)\nUPSC ESE/IES · SSC JE · RRB JE · State PSC AE · ISRO · DRDO · Private SDE / core engg',
+    vfy:'jeemain.nta.ac.in · wbjeeb.nic.in', tags:['12','govt'],
+    branches:[
+      {key:'btech-cse', label:'CSE / IT / AI'},
+      {key:'btech-ece', label:'ECE / EIE'},
+      {key:'btech-ee',  label:'EE / EEE'},
+      {key:'btech-me',  label:'Mechanical'},
+      {key:'btech-ce',  label:'Civil'},
+    ]
+  },
+
+  { stage:'After 12th — PCM', sc:'sp-i', title:'B.Arch (5 years)', sub:'Architecture & Urban Planning · NATA / JEE Paper 2',
+    dur:'5 years', cost:'₹5L – 20L', exam:'NATA · JEE Paper 2',
+    study:'M.Arch · M.Plan · MBA real estate · CoA registration',
+    jobs:'Private firms / PMC / real estate · CPWD/PWD architect · HUDCO · GATE AR',
+    vfy:'nata.in', tags:['12'], subjKey:null },
+
+  // ── AFTER 12th PCB → MEDICINE ──
+  { stage:'After 12th — PCB', sc:'sp-i', title:'MBBS / BDS / AYUSH', sub:'MBBS · BDS · BAMS · BHMS · BUMS · BVSc — all via NEET-UG',
+    dur:'4.5 – 5.5 years', cost:'₹5L – 1Cr+ (govt vs private)', exam:'NEET-UG',
+    study:'NEET-PG / INI-CET → MD/MS/DNB · DM/MCh · USMLE/PLAB abroad',
+    jobs:'MO govt · UPSC CMS · State PSC MO · AIIMS/ESIC/Railways/CAPF/AFMS · Private clinic · Teaching after PG',
+    vfy:'neet.nta.ac.in', tags:['12','govt'],
+    branches:[{key:'mbbs', label:'MBBS path'}]
+  },
+
+  { stage:'After 12th — PCB', sc:'sp-i', title:'B.Sc Nursing / B.Pharm / BPT / Paramedical', sub:'B.Sc Nursing · B.Pharm · Pharm.D · BPT · B.Sc MLT · Radiology · OT · Optometry',
+    dur:'3 – 4 years', cost:'₹1L – 8L', exam:'State nursing CET / CUET / direct',
+    study:'M.Sc Nursing · MPT · M.Pharm · CSIR NET / GATE XL · MPH',
+    jobs:'NORCET / state nursing posts · Pharmacist SSC/Railways/ESIC · Drug inspector · Lab/radio tech · Pharma industry',
+    vfy:'norcet.aiims.edu / state nursing council', tags:['12','govt'],
+    branches:[
+      {key:'bsc-nursing', label:'B.Sc Nursing'},
+      {key:'bpharm',      label:'B.Pharm'},
+    ]
+  },
+
+  // ── AFTER 12th → B.Sc ──
+  { stage:'After 12th — PCM/PCB', sc:'sp-i', title:'B.Sc (3 years)', sub:'Physics · Chemistry · Maths · Biology · CS · Geology · Statistics · IISc · IISER/NISER',
+    dur:'3 years', cost:'₹30K – 3L', exam:'CUET · Board merit · IAT (IISc/IISER) · NEST (NISER) · IIT JAM (PG after)',
+    study:'IIT JAM → M.Sc · MCA NIMCET · Integrated PhD · Actuarial IAI/IFoA',
+    jobs:'SSC CGL · IBPS/SBI · Teaching after B.Ed · Research labs · Govt scientific posts — expand subject below',
+    vfy:'cuet.nta.ac.in · jam.iitd.ac.in', tags:['12'],
+    branches:[
+      {key:'bsc-chem',  label:'Chemistry'},
+      {key:'bsc-phys',  label:'Physics'},
+      {key:'bsc-maths', label:'Mathematics'},
+      {key:'bsc-bio',   label:'Biology / Zoology / Botany'},
+      {key:'bsc-cs',    label:'Computer Science / BCA'},
+      {key:'bsc-geo',   label:'Geology'},
+      {key:'bsc-stat',  label:'Statistics'},
+    ]
+  },
+
+  // ── AFTER 12th COMMERCE ──
+  { stage:'After 12th — Commerce', sc:'sp-i', title:'CA / CS / CMA / B.Com / BBA', sub:'CA ICAI · CS ICSI · CMA ICMAI · BBA · IPM (IIM Indore / Rohtak)',
+    dur:'3 – 5 years', cost:'₹50K – 5L', exam:'CA Foundation · IPMAT · CUET',
+    study:'M.Com · MBA · CFA / FRM / ACCA / CFP · 3-yr LLB',
+    jobs:'Articleship → Big 4 · IBPS/SBI/RBI/NABARD/SEBI · SSC CGL Auditor/AAO · LIC/GIC AO · UPSC CSE',
+    vfy:'icai.org · icsi.edu · icmai.in', tags:['12','govt'],
+    branches:[{key:'bcom-ca', label:'Commerce / CA / BBA'}]
+  },
+
+  // ── AFTER 12th ARTS ──
+  { stage:'After 12th — Arts', sc:'sp-i', title:'BA / BA LLB / BJMC / B.Des / BFA', sub:'BA Hons · BA LLB (CLAT/AILET) · BJMC · B.Des (NID/UCEED/NIFT) · BFA · NSD · FTII',
+    dur:'3 – 5 years', cost:'₹50K – 8L', exam:'CLAT · AILET · UCEED · NIFT · CUET',
+    study:'MA · LLM · M.Des · MJMC · B.Ed → TET/CTET · UGC NET · PhD',
+    jobs:'UPSC CSE · State PSC · SSC CGL/CHSL · Judiciary after LLB · Media / NGO / design · School teacher',
+    vfy:'clat.ac.in · uceed.iitb.ac.in · nifttest.in', tags:['12'],
+    branches:[{key:'ba-arts', label:'Arts / Humanities / Law'}]
+  },
+
+  // ── AFTER 12th ANY ──
+  { stage:'After 12th — Any stream', sc:'sp-i', title:'NDA / Agniveer / SSC GD / CHSL', sub:'Direct defence and 12th-level central govt entries',
+    dur:'Varies', cost:'Nil (selected)', exam:'NDA (UPSC) · Agniveer rally · SSC CHSL · SSC GD · RRB NTPC 12th posts',
+    study:'IMA / INA / AFA → Commissioned Officer · OTA (CDSE)',
+    jobs:'Commissioned officer · Agniveer · Coast Guard Navik/Yantrik · SSC CHSL PA/SA/DEO · Postal GDS',
+    vfy:'upsc.gov.in · ssc.gov.in · joinindianarmy.nic.in', tags:['12','govt','def'], subjKey:null },
+
+  // ── AFTER UG ──
+  { stage:'After UG — Engineering', sc:'sp-i', title:'GATE → PSU / M.Tech', sub:'Annual · CE · ME · EE · CS · EC · CH + 28 papers',
+    dur:'Exam only (annual)', cost:'₹Nil exam / ₹5–15L M.Tech', exam:'GATE — IITs / IISc conduct jointly',
+    study:'M.Tech ₹12,400/month stipend · Integrated PhD at some institutes',
+    jobs:'ONGC · IOCL · NTPC · BHEL · PGCIL · SAIL · BPCL · HPCL · GAIL · CIL · NHPC · NPCIL + 50 more PSUs',
+    vfy:'gate2025.iitr.ac.in', tags:['ug','govt'], subjKey:null },
+
+  { stage:'After UG — Any graduate', sc:'sp-i', title:'UPSC Civil Services (CSE)', sub:'IAS · IPS · IFS · IRS + 25 Group A services',
+    dur:'1 – 3 years prep', cost:'₹50K – 3L prep', exam:'UPSC CSE Prelims + Mains + Interview (annual)',
+    study:'PG optional — not required',
+    jobs:'IAS · IPS · IFS · IRS · IRTS · IFoS · IDAS + 25 all-India Group A services',
+    vfy:'upsc.gov.in', tags:['ug','govt'], subjKey:null },
+
+  { stage:'After UG — Engineering', sc:'sp-i', title:'UPSC ESE / IES', sub:'Civil · Mech · Electrical · E&T branches',
+    dur:'Exam only (annual)', cost:'₹Nil exam', exam:'UPSC Engineering Services — Prelims + Mains + Interview',
+    study:'M.Tech via GATE later optional',
+    jobs:'IRSE · IRSME · IRSEE · IRSSE · CES · CWES · Central Power Engineering · Defence technical',
+    vfy:'upsc.gov.in', tags:['ug','govt'], subjKey:null },
+
+  { stage:'After UG — Banking', sc:'sp-i', title:'IBPS / SBI / RBI / SEBI / NABARD', sub:'PO · SO · Grade B · Grade A — open to all graduates',
+    dur:'Exam cycle (annual)', cost:'₹Nil exam', exam:'IBPS PO/SO · SBI PO · RBI Grade B · NABARD Grade A · SEBI Grade A',
+    study:'MBA Finance improves profile; not required',
+    jobs:'Bank PO/Manager · RBI Officer · NABARD development officer · SEBI regulatory · IRDAI · EPFO EO/AO',
+    vfy:'ibps.in · rbi.org.in · sbi.co.in', tags:['ug','govt'], subjKey:null },
+
+  { stage:"After Master's", sc:'sp-i', title:'PhD — Research pathway', sub:'UGC NET · CSIR NET · GATE · JEST · DBT/ICMR JRF',
+    dur:'4 – 6 years', cost:'₹Nil — fellowship covers living', exam:'UGC NET / CSIR NET / GATE / JEST / DBT-JRF / ICMR-JRF / PMRF',
+    study:'Postdoc: SERB NPDF, DBT/ICMR RA, IISc/IIT/IISER PDF · Postdoc abroad',
+    jobs:'Asst Prof (NET+PhD) · CSIR/DRDO/ISRO/BARC/ICAR/ICMR Scientist · Industry R&D · Patent agent · Science writing',
+    vfy:'ugcnet.nta.ac.in · csirnet.nta.ac.in', tags:['ug','govt'], subjKey:null },
+
+  // ── WEST BENGAL ──
+  { stage:'West Bengal specific', sc:'sp-wb', title:'WBJEE — State Engineering Entrance', sub:'For WB state college B.Tech admission',
+    dur:'4 years B.Tech', cost:'₹1L – 5L (state/MAKAUT)', exam:'WBJEE (JEE Main rank also accepted at many WB colleges)',
+    study:'Same as B.Tech → GATE / M.Tech / MBA / MS abroad',
+    jobs:'State PWD JE · WBSEDCL · WBPCB · Private sector in WB + national',
+    vfy:'wbjeeb.nic.in', tags:['wb','12','govt'], subjKey:null },
+
+  { stage:'West Bengal specific', sc:'sp-wb', title:'WBPSC AE / JE', sub:'West Bengal Public Service Commission engineering posts',
+    dur:'Exam-based', cost:'₹Nil exam', exam:'WBPSC AE exam · State JE notifications (PWD, Irrigation, PHED)',
+    study:'Departmental promotion to AE/EE after service',
+    jobs:'WB PWD · WB Irrigation · PHED · Housing Dept · WBSEDCL technical posts',
+    vfy:'pscwbapplication.in', tags:['wb','ug','govt'], subjKey:null },
+
+  // ── DEFENCE ──
+  { stage:'Defence entry', sc:'sp-df', title:'CDS / AFCAT / NCC Special / TES / UES', sub:'Graduate-level officer commission routes',
+    dur:'Training 1 – 1.5 yr', cost:'Nil', exam:'CDS (UPSC) · AFCAT · NCC Special · TES (10+2 PCM) · UES (pre-final yr engg)',
+    study:'IMA / OTA / AFA / INA → Permanent or Short Service Commission',
+    jobs:'Army officer · Air Force officer · Navy officer · Coast Guard AC Technical/General',
+    vfy:'upsc.gov.in · careerindianairforce.cdac.in · joinindiannavy.gov.in', tags:['ug','def','govt'], subjKey:null },
+];
+
+// ══════════════════════════════════════════════════════════════
+// RENDER TREE
+// ══════════════════════════════════════════════════════════════
+let curFilter='all', curSearch='';
+
+function doFilter(btn,f){
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on'); curFilter=f; renderTree();
+}
+function doSearch(v){ curSearch=v.toLowerCase().trim(); renderTree(); }
+
+function renderTree(){
+  const list=document.getElementById('tlist');
+  let nodes=curFilter==='all'?TREE:TREE.filter(n=>n.tags.includes(curFilter));
+  if(curSearch){
+    nodes=nodes.filter(n=>
+      n.title.toLowerCase().includes(curSearch)||
+      n.sub.toLowerCase().includes(curSearch)||
+      (n.jobs||'').toLowerCase().includes(curSearch)||
+      (n.study||'').toLowerCase().includes(curSearch)||
+      (n.stage||'').toLowerCase().includes(curSearch)
+    );
+  }
+  if(!nodes.length){
+    list.innerHTML=`<div class="empty"><span class="empty-icon">🤔</span><p>No paths found.<br>Try a different filter or search term.</p></div>`;
+    return;
+  }
+  list.innerHTML=nodes.map((n,i)=>`
+    <div class="pnode" id="pn${i}">
+      <div class="pnode-hdr" onclick="toggleNode(${i})">
+        <div class="pnode-main">
+          <span class="spill ${n.sc}">${n.stage}</span>
+          <div class="pnode-title">${n.title}</div>
+          <div class="pnode-sub">${n.sub}</div>
+        </div>
+        <button class="pnode-tog" onclick="toggleNode(${i});event.stopPropagation()">▾</button>
+      </div>
+      <div class="pnode-detail">
+        <div class="meta-grid">
+          <div class="meta-box"><div class="meta-lbl">Duration</div><div class="meta-val">${n.dur}</div></div>
+          <div class="meta-box"><div class="meta-lbl">Typical cost</div><div class="meta-val">${n.cost}</div></div>
+          <div class="meta-box full"><div class="meta-lbl">Entry exam</div><div class="meta-val">${n.exam}</div></div>
+        </div>
+        <div class="fork-section">
+          <div class="fork-lbl">Two roads from here</div>
+          <div class="fork-row">
+            <button class="fork-btn fork-s" onclick='openSheet("Further Study","${n.title.replace(/"/g,"'")}","${(n.study||'').replace(/"/g,"'")}")'>📚 Further study</button>
+            <button class="fork-btn fork-j" onclick='openSheet("Jobs & Exams","${n.title.replace(/"/g,"'")}","${(n.jobs||'').replace(/"/g,"'").replace(/\n/g,"|||")}")'>🏛 Jobs & exams</button>
+          </div>
+          ${n.branches ? renderBranches(n.branches, i) : ''}
+        </div>
+        <div class="vfy"><span class="vfy-dot">✓</span><span>Verify: ${n.vfy}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderBranches(branches, nodeIdx){
+  return `<div class="subj-list" style="margin-top:14px">
+    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-lt);margin-bottom:8px;">Subject / Branch breakdown — tap to expand</div>
+    ${branches.map((b,bi)=>`
+      <div class="subj-card" id="sc${nodeIdx}_${bi}">
+        <div class="subj-hdr" onclick="toggleSubj(${nodeIdx},${bi},'${b.key}')">
+          <span class="subj-emoji">${SUBJECTS[b.key]?SUBJECTS[b.key].emoji:'📌'}</span>
+          <span class="subj-name">${b.label}</span>
+          <span class="subj-tog">▾</span>
+        </div>
+        <div class="subj-detail" id="sd${nodeIdx}_${bi}"></div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function toggleSubj(ni, bi, key){
+  const card=document.getElementById(`sc${ni}_${bi}`);
+  const detail=document.getElementById(`sd${ni}_${bi}`);
+  if(!card||!detail) return;
+  const wasOpen=card.classList.contains('open');
+  // close siblings
+  document.querySelectorAll(`[id^="sc${ni}_"]`).forEach(c=>c.classList.remove('open'));
+  if(!wasOpen){
+    card.classList.add('open');
+    if(!detail.innerHTML && SUBJECTS[key]){
+      const s=SUBJECTS[key];
+      detail.innerHTML=`
+        <div style="padding:10px 12px 4px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-lt);margin-bottom:8px;">Further study</div>
+          <div class="exam-list">${s.study.map((e,i)=>`
+            <div class="exam-item">
+              <span class="exam-num">${i+1}</span>
+              <div class="exam-body">
+                <div class="exam-name">${e.name}</div>
+                <div class="exam-note">${e.note}</div>
+                <span class="exam-tag ${e.tag}">${e.tag==='et-g'?'Govt/PSU':e.tag==='et-p'?'Study/Private':'Defence'}</span>
+              </div>
+            </div>`).join('')}
+          </div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-lt);margin:14px 0 8px;">Jobs & exams</div>
+          <div class="exam-list">${s.jobs.map((e,i)=>`
+            <div class="exam-item">
+              <span class="exam-num">${i+1}</span>
+              <div class="exam-body">
+                <div class="exam-name">${e.name}</div>
+                <div class="exam-note">${e.note}</div>
+                <span class="exam-tag ${e.tag}">${e.tag==='et-g'?'Govt/PSU':e.tag==='et-p'?'Study/Private':'Defence'}</span>
+              </div>
+            </div>`).join('')}
+          </div>
+        </div>`;
+    }
+    setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+  }
+}
+
+function toggleNode(i){
+  const pn=document.getElementById('pn'+i);
+  if(!pn) return;
+  const wasOpen=pn.classList.contains('open');
+  document.querySelectorAll('.pnode').forEach(p=>p.classList.remove('open'));
+  if(!wasOpen){
+    pn.classList.add('open');
+    setTimeout(()=>pn.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+  }
+}
+
+// ── COMPARE ──
+const CMP=[
+  {name:'B.Tech Civil',cls:'A',dur:'4 years',exam:'JEE Main / WBJEE',govt:'Strong — SSC JE, State AE, PWD, UPSC ESE, RRB JE',priv:'Construction, PMC, real estate, consulting',backup:'Diploma JE / GATE → M.Tech',cost:'₹3 – 12L',wins:[false,false,true,false,false,false]},
+  {name:'B.Sc Chemistry',cls:'B',dur:'3 years',exam:'CUET / Board merit',govt:'DRDO CEPTAM, NTPC, BARC, Gun Factory, SSC JCA, FSSAI',priv:'Pharma QC, teaching, research lab',backup:'IIT JAM → M.Sc → CSIR NET',cost:'₹30K – 2L',wins:[false,false,false,false,true,true]},
+];
+const CMP_F=[['dur','Duration'],['exam','Core exam'],['govt','Govt scope'],['priv','Private scope'],['backup','Best backup'],['cost','Typical cost']];
+
+function renderCompare(){
+  document.getElementById('cmp-grid').innerHTML=CMP.map(p=>`
+    <div class="cmp-col ${p.cls}">
+      <div class="cmp-name">${p.name}</div>
+      ${CMP_F.map(([k,l],fi)=>`<div class="cmp-f"><div class="cmp-fl">${l}</div><div class="cmp-fv${p.wins[fi]?' win':''}">${p[k]}</div></div>`).join('')}
+    </div>`).join('');
+  document.getElementById('cmp-verdict').innerHTML=`
+    <div class="verdict-t">How to read this</div>
+    <div class="verdict-b">Civil B.Tech has strong govt technical seats (SSC JE, State AE, UPSC ESE). B.Sc Chemistry costs far less and opens DRDO, BARC, NTPC, Gun Factory, FSSAI routes — plus a strong backup via IIT JAM. Right pick depends on budget and whether you want field engineering or lab/research.</div>`;
+}
+
+// ── SHEET ──
+function openSheet(lbl,title,body){
+  document.getElementById('sh-lbl').textContent=lbl;
+  document.getElementById('sh-title').textContent=title;
+  document.getElementById('sh-body').innerHTML=body.replace(/\|\|\|/g,'<br>').replace(/·/g,' · ');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeSheet(e){if(!e||e.target===document.getElementById('overlay'))document.getElementById('overlay').classList.remove('open');}
+
+// ── INIT ──
+renderOb();
+renderTree();
+renderCompare();
+</script>
+</body>
+</html>
