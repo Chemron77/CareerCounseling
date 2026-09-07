@@ -54,7 +54,10 @@
       "purpose": "maskable"
     }
   ],
-  "categories": ["education", "productivity"],
+  "categories": [
+    "education",
+    "productivity"
+  ],
   "screenshots": [
     {
       "src": "icon-512.png",
@@ -69,7 +72,13 @@
       "name": "Explore Paths",
       "short_name": "Explore",
       "url": "/CareerCounseling/",
-      "icons": [{ "src": "icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "icon-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
